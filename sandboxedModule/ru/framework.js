@@ -4,15 +4,19 @@
 // приложением интерфейс. 
 
 // Фреймворк может явно зависеть от библиотек через dependency lookup
+// Task #2 Добавляем библиотеку util
 var fs = require('fs'),
-    vm = require('vm');
+    vm = require('vm'),
+    util = require('util');
 
 // Создаем контекст-песочницу, которая станет глобальным контекстом приложения
 // Task #1 Пробросили в контекст setInterval и setTimeout
+// Task #2 Пробросили в контекст util
 var context = { module: {}, 
                console: console,
                setInterval: setInterval,
-               setTimeout: setTimeout
+               setTimeout: setTimeout,
+               util: util
 };
 context.global = context;
 var sandbox = vm.createContext(context);

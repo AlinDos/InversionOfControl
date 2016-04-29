@@ -17,3 +17,10 @@ setInterval(function(){
 setTimeout(function(){
   console.log('setTimeout');
 }, 1500);
+
+// Task #2 Используем пару функций util
+var today = new Date();
+console.log(today + 
+            "\n util.isDate: " + util.isDate(today) +
+            "\n util.isNumber: " + util.isNumber(today) +
+            "\n util.isPrimitive " + util.isPrimitive(today));
