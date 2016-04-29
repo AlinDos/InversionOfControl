@@ -9,30 +9,49 @@ var fs = require('fs'),
     vm = require('vm'),
     util = require('util');
 
-// Создаем контекст-песочницу, которая станет глобальным контекстом приложения
-// Task #1 Пробросили в контекст setInterval и setTimeout
-// Task #2 Пробросили в контекст util
-var context = { module: {}, 
-               console: console,
-               setInterval: setInterval,
-               setTimeout: setTimeout,
-               util: util
-};
-context.global = context;
-var sandbox = vm.createContext(context);
+// Функция создания контекста-песочницы, которая станет глобальным контекстом приложения
+function newSandboxFor(appName){
+  // Task #1 Пробросили в контекст setInterval и setTimeout
+  // Task #2 Пробросили в контекст util
+  // Task #4 Расширяем console
+  var context = { module: {}, 
+                 console: extendedConsoleFor(appName),
+                 setInterval: setInterval,
+                 setTimeout: setTimeout,
+                 util: util
+  };
+  context.global = context;
+  return vm.createContext(context);
+}
+
+// Task #4 Функция создания расширенной console
+function extendedConsoleFor(appName){
+  var extendedConsole = {};
+  // Task #4 Оборачиваем console.log()
+  extendedConsole.log = function() {
+    var time = new Date().toLocaleTimeString();
+    console.log(appName + " | " +  
+                time + " | " + 
+                arguments[0]);
+  };
+  return extendedConsole;
+}
 
 // Task #3 Считываем все аргументы после "node framework"
 var args = process.argv.slice(2);
 // Task #3 Запускаем фреймворк с каждым аргументом
 args.forEach(function(fileName){
-    // Task #3 Проверяем имя файла
-    if (!fileName.endsWith('.js')) {
-      fileName = fileName + '.js';
-    }
+  // Task #3 Проверяем имя файла
+  if (!fileName.endsWith('.js')) {
+    fileName = fileName + '.js';
+  }
   
-    // Читаем исходный код приложения из файла
-    fs.readFile(fileName, function(err, src) {
+  // Читаем исходный код приложения из файла
+  fs.readFile(fileName, function(err, src) {
     // Тут нужно обработать ошибки
+    
+    // Создаем новую песочницу
+    var sandbox = newSandboxFor(fileName);
 
     // Запускаем код приложения в песочнице
     var script = vm.createScript(src, fileName);
@@ -42,4 +61,3 @@ args.forEach(function(fileName){
     // сохранить в кеш, вывести на экран исходный код приложения и т.д.
   });
 });
-
