@@ -30,9 +30,15 @@ function extendedConsoleFor(appName){
   // Task #4 Оборачиваем console.log()
   extendedConsole.log = function() {
     var time = new Date().toLocaleTimeString();
-    console.log(appName + " | " +  
-                time + " | " + 
-                arguments[0]);
+    var output = appName + " | " +
+                 time + " | " +
+                 arguments[0];
+    console.log(output);
+    
+    // Task #5 Параллельная запись в файл
+    fs.appendFile((appName + '.log'), (output + '\n'), function(err){
+      if (err) throw err; 
+    });
   };
   return extendedConsole;
 }
