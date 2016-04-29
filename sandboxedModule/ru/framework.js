@@ -21,15 +21,25 @@ var context = { module: {},
 context.global = context;
 var sandbox = vm.createContext(context);
 
-// Читаем исходный код приложения из файла
-var fileName = './application.js';
-fs.readFile(fileName, function(err, src) {
-  // Тут нужно обработать ошибки
+// Task #3 Считываем все аргументы после "node framework"
+var args = process.argv.slice(2);
+// Task #3 Запускаем фреймворк с каждым аргументом
+args.forEach(function(fileName){
+    // Task #3 Проверяем имя файла
+    if (!fileName.endsWith('.js')) {
+      fileName = fileName + '.js';
+    }
   
-  // Запускаем код приложения в песочнице
-  var script = vm.createScript(src, fileName);
-  script.runInNewContext(sandbox);
-  
-  // Забираем ссылку из sandbox.module.exports, можем ее исполнить,
-  // сохранить в кеш, вывести на экран исходный код приложения и т.д.
+    // Читаем исходный код приложения из файла
+    fs.readFile(fileName, function(err, src) {
+    // Тут нужно обработать ошибки
+
+    // Запускаем код приложения в песочнице
+    var script = vm.createScript(src, fileName);
+    script.runInNewContext(sandbox);
+
+    // Забираем ссылку из sandbox.module.exports, можем ее исполнить,
+    // сохранить в кеш, вывести на экран исходный код приложения и т.д.
+  });
 });
+
