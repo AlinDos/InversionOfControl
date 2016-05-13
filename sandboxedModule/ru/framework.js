@@ -93,10 +93,12 @@ args.forEach(function(fileName) {
       console.log(key + ' | ' + typeof(hashTable[key]));
     }
     
-    // Task #8 Выводим исходник функции и кол-во параметров
+    // Task #8 Выводим исходник функции и кол-во параметров функции sum
+    if (fileName == 'oneMoreApp.js') { 
     console.log("\nFunction src:\n" +
                hashTable.sum.toString());
     console.log("Function number of params:\n" +
           hashTable.sum.length.toString());
+    }
   });
 });
