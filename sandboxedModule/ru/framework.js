@@ -5,20 +5,24 @@
 
 // Фреймворк может явно зависеть от библиотек через dependency lookup
 // Task #2 Добавляем библиотеку util
+// Добавляем path для определения имени файла
 var fs = require('fs'),
     vm = require('vm'),
-    util = require('util');
+    util = require('util'),
+    path = require('path');
 
 // Функция создания контекста-песочницы, которая станет глобальным контекстом приложения
 function newSandboxFor(appName) {
   // Task #1 Пробросили в контекст setInterval и setTimeout
   // Task #2 Пробросили в контекст util
   // Task #4 Расширяем console
+  // Task #6 Пробросили в контекст require 
   var context = { module: {}, 
                  console: extendedConsoleFor(appName),
                  setInterval: setInterval,
                  setTimeout: setTimeout,
-                 util: util
+                 util: util,
+                 require: extendedRequire
   };
   context.global = context;
   return vm.createContext(context);
@@ -42,6 +46,21 @@ function extendedConsoleFor(appName) {
     });
   };
   return extendedConsole;
+}
+
+// Task #6 Функция создания расширенной require
+function extendedRequire(moduleName) {
+  var time = new Date().toLocaleTimeString();
+  // Format of output
+  var output = time + " | " + moduleName + " is required";
+  console.log(output);
+  
+  //Параллельная запись в файл
+  var appName = path.basename(process.argv[2]);
+  fs.appendFile((appName + '.log'), (output + '\n'), function(err) {
+      if (err) throw err; 
+    });
+  return require(moduleName);
 }
 
 // Task #3 Считываем все аргументы после "node framework"
