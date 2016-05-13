@@ -86,5 +86,11 @@ args.forEach(function(fileName) {
 
     // Забираем ссылку из sandbox.module.exports, можем ее исполнить,
     // сохранить в кеш, вывести на экран исходный код приложения и т.д.
+    
+    // Task #7 Экспортируем хеш и выводим его содержимое с указанием типов
+    var hashTable = sandbox.module.exports;
+    for (var key in hashTable) {
+      console.log(key + ' | ' + typeof(hashTable[key]));
+    }
   });
 });
