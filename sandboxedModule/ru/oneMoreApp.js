@@ -6,5 +6,8 @@ module.exports = {
   variable: 'Exported variable',
   print: function() {
     console.log('Exported function');
+  },
+  sum: function(a, b) {
+    return a + b;
   }
 };

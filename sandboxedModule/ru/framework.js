@@ -92,5 +92,11 @@ args.forEach(function(fileName) {
     for (var key in hashTable) {
       console.log(key + ' | ' + typeof(hashTable[key]));
     }
+    
+    // Task #8 Выводим исходник функции и кол-во параметров
+    console.log("\nFunction src:\n" +
+               hashTable.sum.toString());
+    console.log("Function number of params:\n" +
+          hashTable.sum.length.toString());
   });
 });
