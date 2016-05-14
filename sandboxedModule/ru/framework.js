@@ -35,8 +35,8 @@ function extendedConsoleFor(appName) {
   extendedConsole.log = function() {
     var time = new Date().toLocaleTimeString();
     // Format of output
-    var output = appName + " | " +
-                 time + " | " +
+    var output = appName + ' | ' +
+                 time + ' | ' +
                  arguments[0];
     console.log(output);
     
@@ -52,7 +52,7 @@ function extendedConsoleFor(appName) {
 function extendedRequire(moduleName) {
   var time = new Date().toLocaleTimeString();
   // Format of output
-  var output = time + " | " + moduleName + " is required";
+  var output = time + ' | ' + moduleName + ' is required';
   console.log(output);
   
   //Параллельная запись в файл
@@ -63,7 +63,7 @@ function extendedRequire(moduleName) {
   return require(moduleName);
 }
 
-// Task #3 Считываем все аргументы после "node framework"
+// Task #3 Считываем все аргументы после 'node framework'
 var args = process.argv.slice(2);
 // Task #3 Запускаем фреймворк с каждым аргументом
 args.forEach(function(fileName) {
@@ -93,12 +93,12 @@ args.forEach(function(fileName) {
     // Task #10 Выводим разницу ключей после запуска 
     for (var key in sandbox.global) {
       if (!(key in initialKeys)) {
-        console.log("Add key | " + key);
+        console.log('Add key | ' + key);
       }
     }
     for (var key in initialKeys) {
       if (!(key in sandbox.global)) {
-        console.log("Remove key | " + key); 
+        console.log('Remove key | ' + key); 
       }
     }
 
@@ -108,14 +108,14 @@ args.forEach(function(fileName) {
     // Task #7 Экспортируем хеш и выводим его содержимое с указанием типов
     var hashTable = sandbox.module.exports;
     for (var key in hashTable) {
-      console.log(key + ' | ' + typeof(hashTable[key]));
+      console.log(key + ' - ' + typeof(hashTable[key]));
     }
     
     // Task #8 Выводим исходник функции и кол-во параметров функции sum
     if (fileName == 'oneMoreApp.js') { 
-    console.log("\nFunction src:\n" +
+    console.log('\nFunction src:\n' +
                hashTable.sum.toString());
-    console.log("Function number of params:\n" +
+    console.log('Function number of params:\n' +
           hashTable.sum.length.toString());
     }
   });

@@ -21,6 +21,6 @@ setTimeout(function(){
 // Task #2 Используем пару функций util
 var today = new Date();
 console.log(today + 
-            "\n util.isDate: " + util.isDate(today) +
-            "\n util.isNumber: " + util.isNumber(today) +
-            "\n util.isPrimitive " + util.isPrimitive(today));
+            '\n util.isDate: ' + util.isDate(today) +
+            '\n util.isNumber: ' + util.isNumber(today) +
+            '\n util.isPrimitive ' + util.isPrimitive(today));
