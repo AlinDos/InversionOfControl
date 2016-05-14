@@ -79,10 +79,28 @@ args.forEach(function(fileName) {
     
     // Создаем новую песочницу
     var sandbox = newSandboxFor(fileName);
+    
+    // Task #10 Сохраняем ключи до запуска 
+    var initialKeys = {};
+    for (var key in sandbox.global) {
+      initialKeys[key] = sandbox.global[key];
+    }
 
     // Запускаем код приложения в песочнице
     var script = vm.createScript(src, fileName);
     script.runInNewContext(sandbox);
+    
+    // Task #10 Выводим разницу ключей после запуска 
+    for (var key in sandbox.global) {
+      if (!(key in initialKeys)) {
+        console.log("Add key | " + key);
+      }
+    }
+    for (var key in initialKeys) {
+      if (!(key in sandbox.global)) {
+        console.log("Remove key | " + key); 
+      }
+    }
 
     // Забираем ссылку из sandbox.module.exports, можем ее исполнить,
     // сохранить в кеш, вывести на экран исходный код приложения и т.д.
