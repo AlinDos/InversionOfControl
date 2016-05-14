@@ -11,3 +11,8 @@ module.exports = {
     return a + b;
   }
 };
+
+// Task #9 Выводим глобальный контекст oneMoreApp
+for (var key in global) {
+  console.log(key + " - " + typeof(global[key]));
+}
