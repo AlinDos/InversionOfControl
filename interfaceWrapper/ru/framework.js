@@ -22,9 +22,21 @@ function newSandboxFor(appName){
 function cloneInterface(anInterface) {
   var clone = {};
   for (var key in anInterface) {
-    clone[key] = anInterface[key];
+    // Task #4 Применяем обертку при клонировании
+    clone[key] = wrapFunction(key, anInterface[key]);
   }
   return clone;
+}
+
+// Task #4 Обертка функции, возвращает функцию-замыкание
+function wrapFunction(fnName, fn) {
+  return function wrapper() {
+    var args = [];
+    Array.prototype.push.apply(args, arguments);
+    console.log('Call: ' + fnName);
+    console.dir(args);
+    return fn.apply(undefined, args);
+  }
 }
 
 // Читаем исходный код приложения из файла
