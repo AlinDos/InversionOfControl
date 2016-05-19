@@ -35,6 +35,13 @@ function wrapFunction(fnName, fn) {
     Array.prototype.push.apply(args, arguments);
     console.log('Call: ' + fnName);
     console.dir(args);
+    
+    // Логирование в файл
+    var today = new Date().toLocaleTimeString();
+    fs.appendFile('work.log', 
+                  (today + ' | ' + fnName + ' | ' + args + '\n'),
+                  function(err) {});
+    
     // Task #5 Находим и оборачиваем callback
     if (typeof(args.slice(-1)[0]) == 'function') {
       var last = args.pop();
@@ -58,10 +65,16 @@ function wrapCallback(fn) {
         newArgs.push(typeof(args[i]));
       }
       else {
-        newArgs.push(args[i]);
+        newArgs.push(args[i] + '');
       }
     }
     console.dir(newArgs);
+    
+    // Логирование в файл
+    var today = new Date().toLocaleTimeString();
+    fs.appendFile('work.log', 
+                  (today + ' | callback | ' + newArgs + '\n'),
+                  function(err) {});
     
     return fn.apply(undefined, args);
   }
