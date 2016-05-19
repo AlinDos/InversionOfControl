@@ -35,6 +35,34 @@ function wrapFunction(fnName, fn) {
     Array.prototype.push.apply(args, arguments);
     console.log('Call: ' + fnName);
     console.dir(args);
+    // Task #5 Находим и оборачиваем callback
+    if (typeof(args.slice(-1)[0]) == 'function') {
+      var last = args.pop();
+      args.push(wrapCallback(last));
+    }
+    return fn.apply(undefined, args);
+  }
+}
+
+// Task #5 Функция обертки callback
+function wrapCallback(fn) {
+  return function wrapper() {
+    var args = [];
+    Array.prototype.push.apply(args, arguments);
+    console.log('Call: callback');
+    
+    // Сохранение "необычных" значений в приведении аргументов к типам
+    var newArgs = [];
+    for (var i = 0; i < args.length; i++) {
+      if (args[i]) {
+        newArgs.push(typeof(args[i]));
+      }
+      else {
+        newArgs.push(args[i]);
+      }
+    }
+    console.dir(newArgs);
+    
     return fn.apply(undefined, args);
   }
 }
